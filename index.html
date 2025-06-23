@@ -1,187 +1,223 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Portfolio Homepage</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap');
+    /* Reset */
     * {
       box-sizing: border-box;
       margin: 0; padding: 0;
     }
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #fff;
-      color: #222;
+      font-family: 'Space Grotesk', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f7f7f7; /* off-white grey */
+      color: #1a1a1a;
       min-height: 100vh;
       padding-top: 60px;
+      scroll-behavior: smooth;
     }
     header {
       position: fixed;
       top: 0; left: 0; right: 0;
-      background: #111;
-      color: white;
+      background: #0d0d0d;
+      color: #eee;
       height: 60px;
       display: flex;
       align-items: center;
       padding: 0 30px;
       z-index: 1000;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      font-feature-settings: 'liga' off;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 500;
     }
-    /* Logo container */
     .logo {
       flex-shrink: 0;
-      height: 40px;
+      height: 38px;
+      filter: brightness(1.2);
+      user-select: none;
     }
     .logo img {
       height: 100%;
       width: auto;
       display: block;
+      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(105%) contrast(90%);
     }
     nav {
-      margin-left: 30px;
+      margin-left: 40px;
       display: flex;
       align-items: center;
-      gap: 25px;
-      flex-wrap: wrap;
+      gap: 28px;
+      flex-wrap: nowrap;
       flex-grow: 1;
+      font-size: 0.95rem;
     }
     nav a {
-      color: white;
+      color: #ccc;
       text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
-      transition: color 0.3s ease;
+      font-weight: 700;
+      transition: color 0.25s ease, transform 0.3s ease;
+      position: relative;
+      padding-bottom: 3px;
     }
-    nav a:hover {
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      left: 0;
+      bottom: 0;
+      background-color: #f45b69;
+      transition: width 0.3s ease;
+    }
+    nav a:hover,
+    nav a:focus {
       color: #f45b69;
+      transform: scale(1.05);
+    }
+    nav a:hover::after,
+    nav a:focus::after {
+      width: 100%;
     }
     main {
       max-width: 900px;
       margin: 0 auto 60px;
-      padding: 20px;
+      padding: 20px 30px;
     }
-    /* Carousel styles */
     .carousel {
       position: relative;
       overflow: hidden;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-      height: 400px;
-      margin-bottom: 40px;
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      height: 420px;
+      margin-bottom: 48px;
+      background: #222;
     }
     .carousel img {
       width: 100%;
-      height: 400px;
+      height: 420px;
       object-fit: cover;
       position: absolute;
       top: 0; left: 0;
       opacity: 0;
-      transition: opacity 1s ease-in-out;
-      border-radius: 12px;
+      transition: opacity 1.2s ease-in-out;
+      border-radius: 14px;
+      filter: saturate(1.1) brightness(1.05);
     }
     .carousel img.active {
       opacity: 1;
       position: relative;
     }
-    /* Intro */
     .intro {
       text-align: center;
-      margin-bottom: 40px;
-    }
-    .intro p {
-      font-size: 1.2rem;
-      color: #555;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    /* Category buttons */
-    .categories {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
       margin-bottom: 60px;
+      font-size: 1.25rem;
+      color: #444;
+      font-weight: 500;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
     }
-    .categories a {
-      background: #f45b69;
-      color: white;
-      padding: 12px 25px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: background 0.3s ease;
-    }
-    .categories a:hover {
-      background: #d24357;
-    }
-    /* Contact form */
     section.contact {
       max-width: 600px;
-      margin: 0 auto 60px;
-      padding: 20px;
-      border: 1px solid #eee;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin: 0 auto 80px;
+      padding: 28px 30px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.1);
     }
     section.contact h2 {
-      margin-bottom: 20px;
+      margin-bottom: 28px;
       font-weight: 700;
       color: #f45b69;
+      font-size: 1.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      user-select: none;
     }
     section.contact label {
       display: block;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
       font-weight: 600;
       color: #333;
+      letter-spacing: 0.02em;
     }
     section.contact input,
     section.contact textarea {
       width: 100%;
-      padding: 10px 12px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+      padding: 12px 14px;
+      margin-bottom: 24px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
       font-size: 1rem;
+      font-weight: 500;
+      font-family: inherit;
       resize: vertical;
+      transition: border-color 0.3s ease;
+    }
+    section.contact input:focus,
+    section.contact textarea:focus {
+      border-color: #f45b69;
+      outline: none;
     }
     section.contact button {
       background: #f45b69;
       color: white;
       border: none;
-      padding: 12px 25px;
+      padding: 14px 30px;
       border-radius: 30px;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 1.1rem;
       cursor: pointer;
+      user-select: none;
       transition: background 0.3s ease;
+      display: block;
+      margin: 0 auto;
+      width: max-content;
     }
-    section.contact button:hover {
+    section.contact button:hover,
+    section.contact button:focus {
       background: #d24357;
     }
-    /* Responsive tweaks */
+    /* Responsive */
     @media (max-width: 480px) {
       header {
         padding: 0 15px;
       }
       nav {
         margin-left: 15px;
-        gap: 15px;
+        gap: 18px;
+        font-size: 0.9rem;
       }
       main {
-        padding: 15px;
+        padding: 15px 20px;
       }
       section.contact {
-        padding: 15px;
+        padding: 20px 22px;
+      }
+      .intro {
+        font-size: 1.1rem;
+        margin-bottom: 50px;
+      }
+      .carousel {
+        height: 280px;
+      }
+      .carousel img {
+        height: 280px;
       }
     }
   </style>
 </head>
 <body>
 <header>
-  <div class="logo">
-    <!-- Replace this src URL with your own logo image URL -->
-    <img src="https://via.placeholder.com/120x40?text=Logo" alt="Logo" />
+  <div class="logo" aria-label="Site Logo">
+    <!-- Replace this src with your own logo URL -->
+    <img src="https://via.placeholder.com/140x46?text=LOGO" alt="Site Logo" />
   </div>
   <nav>
     <a href="graphic-design.html">Graphic Design</a>
@@ -192,51 +228,5 @@
   </nav>
 </header>
 <main>
-  <div class="carousel" aria-label="Portfolio highlights">
-    <img src="https://via.placeholder.com/900x400?text=Artwork+1" alt="Artwork 1" class="active" />
-    <img src="https://via.placeholder.com/900x400?text=Artwork+2" alt="Artwork 2" />
-    <img src="https://via.placeholder.com/900x400?text=Artwork+3" alt="Artwork 3" />
-  </div>
-
-  <section class="intro">
-    <p>Welcome to my portfolio. Explore my work by category or get in touch using the contact form below.</p>
-  </section>
-
-  <div class="categories" aria-label="Portfolio categories">
-    <a href="graphic-design.html">Graphic Design</a>
-    <a href="digital-art.html">Digital Art</a>
-    <a href="traditional-art.html">Traditional Art</a>
-    <a href="logo-branding.html">Logo & Branding</a>
-    <a href="editing-retouching.html">Editing & Retouching</a>
-  </div>
-
-  <section class="contact" id="contact">
-    <h2>Contact Me</h2>
-    <form action="https://formspree.io/f/yourformid" method="POST">
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" required />
-      
-      <label for="email">Email</label>
-      <input type="email" id="email" name="_replyto" required />
-      
-      <label for="message">Message</label>
-      <textarea id="message" name="message" rows="5" required></textarea>
-      
-      <button type="submit">Send</button>
-    </form>
-  </section>
-</main>
-
-<script>
-  // Simple auto-rotating carousel
-  const slides = document.querySelectorAll('.carousel img');
-  let current = 0;
-  setInterval(() => {
-    slides[current].classList.remove('active');
-    current = (current + 1) % slides.length;
-    slides[current].classList.add('active');
-  }, 4000);
-</script>
-
-</body>
-</html>
+  <div class="carousel" aria-label="Portfolio highlights carousel">
+    <img src="https://via.placeholder.com/900x420?text=Artwork+1" alt="Artwork 1" class="acti
