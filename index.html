@@ -3,20 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>John Emerson - Portfolio</title>
+  <title>Portfolio Homepage</title>
   <style>
-    /* Reset */
     * {
       box-sizing: border-box;
       margin: 0; padding: 0;
     }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.6;
       background: #fff;
       color: #222;
-      scroll-behavior: smooth;
-      padding-top: 60px; /* space for fixed nav */
+      min-height: 100vh;
+      padding-top: 60px;
     }
     header {
       position: fixed;
@@ -30,15 +28,27 @@
       z-index: 1000;
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
-    header h1 {
-      font-weight: 700;
-      font-size: 1.4rem;
+    /* Logo container */
+    .logo {
+      flex-shrink: 0;
+      height: 40px;
+    }
+    .logo img {
+      height: 100%;
+      width: auto;
+      display: block;
+    }
+    nav {
+      margin-left: 30px;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      flex-wrap: wrap;
       flex-grow: 1;
     }
     nav a {
       color: white;
       text-decoration: none;
-      margin-left: 25px;
       font-weight: 600;
       font-size: 0.9rem;
       transition: color 0.3s ease;
@@ -46,142 +56,187 @@
     nav a:hover {
       color: #f45b69;
     }
-    section {
+    main {
       max-width: 900px;
-      margin: 50px auto 80px;
-      padding: 0 20px;
+      margin: 0 auto 60px;
+      padding: 20px;
     }
-    section h2 {
-      font-size: 2rem;
-      border-bottom: 3px solid #f45b69;
-      padding-bottom: 10px;
-      margin-bottom: 25px;
-      font-weight: 700;
+    /* Carousel styles */
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      height: 400px;
+      margin-bottom: 40px;
     }
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-      gap: 20px;
-    }
-    .gallery img {
+    .carousel img {
       width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
-      cursor: pointer;
+      height: 400px;
       object-fit: cover;
-      aspect-ratio: 4 / 3;
+      position: absolute;
+      top: 0; left: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      border-radius: 12px;
     }
-    .gallery img:hover {
-      transform: scale(1.05);
+    .carousel img.active {
+      opacity: 1;
+      position: relative;
     }
-    p.description {
-      max-width: 700px;
-      margin-bottom: 30px;
-      font-size: 1.1rem;
-      color: #555;
-    }
-    footer {
+    /* Intro */
+    .intro {
       text-align: center;
-      padding: 30px 10px;
-      color: #777;
-      font-size: 0.9rem;
-      border-top: 1px solid #eee;
-      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+    .intro p {
+      font-size: 1.2rem;
+      color: #555;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    /* Category buttons */
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 60px;
+    }
+    .categories a {
+      background: #f45b69;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+    .categories a:hover {
+      background: #d24357;
+    }
+    /* Contact form */
+    section.contact {
+      max-width: 600px;
+      margin: 0 auto 60px;
+      padding: 20px;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    section.contact h2 {
+      margin-bottom: 20px;
+      font-weight: 700;
+      color: #f45b69;
+    }
+    section.contact label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #333;
+    }
+    section.contact input,
+    section.contact textarea {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      resize: vertical;
+    }
+    section.contact button {
+      background: #f45b69;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    section.contact button:hover {
+      background: #d24357;
     }
     /* Responsive tweaks */
     @media (max-width: 480px) {
       header {
         padding: 0 15px;
       }
-      nav a {
+      nav {
         margin-left: 15px;
-        font-size: 0.85rem;
+        gap: 15px;
       }
-      section {
-        margin: 40px 15px 60px;
+      main {
+        padding: 15px;
+      }
+      section.contact {
+        padding: 15px;
       }
     }
   </style>
 </head>
 <body>
-
 <header>
-  <h1>John Emerson</h1>
+  <div class="logo">
+    <!-- Replace this src URL with your own logo image URL -->
+    <img src="https://via.placeholder.com/120x40?text=Logo" alt="Logo" />
+  </div>
   <nav>
-    <a href="#graphic-design">Graphic Design</a>
-    <a href="#digital-art">Digital Art</a>
-    <a href="#traditional-art">Traditional Art</a>
-    <a href="#logo-branding">Logo & Branding</a>
-    <a href="#editing-retouching">Editing & Retouching</a>
+    <a href="graphic-design.html">Graphic Design</a>
+    <a href="digital-art.html">Digital Art</a>
+    <a href="traditional-art.html">Traditional Art</a>
+    <a href="logo-branding.html">Logo & Branding</a>
+    <a href="editing-retouching.html">Editing & Retouching</a>
   </nav>
 </header>
-
 <main>
-  <section id="graphic-design">
-    <h2>Graphic Design</h2>
-    <p class="description">
-      Creating bold and memorable designs for print and digital media — from posters to social campaigns.
-    </p>
-    <div class="gallery">
-      <img src="https://via.placeholder.com/400x300?text=Graphic+Design+1" alt="Graphic Design Work 1" />
-      <img src="https://via.placeholder.com/400x300?text=Graphic+Design+2" alt="Graphic Design Work 2" />
-      <img src="https://via.placeholder.com/400x300?text=Graphic+Design+3" alt="Graphic Design Work 3" />
-    </div>
+  <div class="carousel" aria-label="Portfolio highlights">
+    <img src="https://via.placeholder.com/900x400?text=Artwork+1" alt="Artwork 1" class="active" />
+    <img src="https://via.placeholder.com/900x400?text=Artwork+2" alt="Artwork 2" />
+    <img src="https://via.placeholder.com/900x400?text=Artwork+3" alt="Artwork 3" />
+  </div>
+
+  <section class="intro">
+    <p>Welcome to my portfolio. Explore my work by category or get in touch using the contact form below.</p>
   </section>
 
-  <section id="digital-art">
-    <h2>Digital Art</h2>
-    <p class="description">
-      Illustrations, concept art, and digital paintings crafted with Photoshop, Procreate, and more.
-    </p>
-    <div class="gallery">
-      <img src="https://via.placeholder.com/400x300?text=Digital+Art+1" alt="Digital Art Work 1" />
-      <img src="https://via.placeholder.com/400x300?text=Digital+Art+2" alt="Digital Art Work 2" />
-      <img src="https://via.placeholder.com/400x300?text=Digital+Art+3" alt="Digital Art Work 3" />
-    </div>
-  </section>
+  <div class="categories" aria-label="Portfolio categories">
+    <a href="graphic-design.html">Graphic Design</a>
+    <a href="digital-art.html">Digital Art</a>
+    <a href="traditional-art.html">Traditional Art</a>
+    <a href="logo-branding.html">Logo & Branding</a>
+    <a href="editing-retouching.html">Editing & Retouching</a>
+  </div>
 
-  <section id="traditional-art">
-    <h2>Traditional Art</h2>
-    <p class="description">
-      Paintings, sketches, and mixed media artworks on canvas and paper.
-    </p>
-    <div class="gallery">
-      <img src="https://via.placeholder.com/400x300?text=Traditional+Art+1" alt="Traditional Art Work 1" />
-      <img src="https://via.placeholder.com/400x300?text=Traditional+Art+2" alt="Traditional Art Work 2" />
-      <img src="https://via.placeholder.com/400x300?text=Traditional+Art+3" alt="Traditional Art Work 3" />
-    </div>
-  </section>
-
-  <section id="logo-branding">
-    <h2>Logo & Branding</h2>
-    <p class="description">
-      Custom logos and brand identities designed to capture your vision and personality.
-    </p>
-    <div class="gallery">
-      <img src="https://via.placeholder.com/400x300?text=Logo+Design+1" alt="Logo Design 1" />
-      <img src="https://via.placeholder.com/400x300?text=Logo+Design+2" alt="Logo Design 2" />
-      <img src="https://via.placeholder.com/400x300?text=Logo+Design+3" alt="Logo Design 3" />
-    </div>
-  </section>
-
-  <section id="editing-retouching">
-    <h2>Editing & Retouching</h2>
-    <p class="description">
-      Professional photo editing, retouching, and image manipulation services.
-    </p>
-    <div class="gallery">
-      <img src="https://via.placeholder.com/400x300?text=Editing+1" alt="Editing Work 1" />
-      <img src="https://via.placeholder.com/400x300?text=Editing+2" alt="Editing Work 2" />
-      <img src="https://via.placeholder.com/400x300?text=Editing+3" alt="Editing Work 3" />
-    </div>
+  <section class="contact" id="contact">
+    <h2>Contact Me</h2>
+    <form action="https://formspree.io/f/yourformid" method="POST">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required />
+      
+      <label for="email">Email</label>
+      <input type="email" id="email" name="_replyto" required />
+      
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+      
+      <button type="submit">Send</button>
+    </form>
   </section>
 </main>
 
-<footer>
-  © 2025 John Emerson — All rights reserved
-</footer>
+<script>
+  // Simple auto-rotating carousel
+  const slides = document.querySelectorAll('.carousel img');
+  let current = 0;
+  setInterval(() => {
+    slides[current].classList.remove('active');
+    current = (current + 1) % slides.length;
+    slides[current].classList.add('active');
+  }, 4000);
+</script>
 
 </body>
 </html>
